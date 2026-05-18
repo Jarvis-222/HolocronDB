@@ -4,6 +4,7 @@ import (
 	"HolocronDB/config"
 	"HolocronDB/core"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"strconv"
@@ -27,7 +28,7 @@ func DecodeStringArray(data []byte) ([]string, error) {
 	return tokens, nil
 }
 
-func readCommand(c net.Conn) (*core.RedisCommand, error) {
+func readCommand(c io.ReadWriter) (*core.RedisCommand, error) {
 
 	var buf []byte = make([]byte, 512)
 
@@ -53,7 +54,7 @@ func readCommand(c net.Conn) (*core.RedisCommand, error) {
 
 }
 
-func respond(cmd *core.RedisCommand, c net.Conn) {
+func respond(cmd *core.RedisCommand, c io.ReadWriter) {
 
 	res, err := core.EvalCommand(cmd)
 
@@ -66,10 +67,11 @@ func respond(cmd *core.RedisCommand, c net.Conn) {
 
 }
 
-func respondError(err error, c net.Conn) {
+func respondError(err error, c io.ReadWriter) {
 
 	c.Write([]byte(fmt.Sprintf("-%s\r\n", err)))
 }
+
 func RunSyncTCPServer() {
 
 	log.Println("Starting synchronous TCP server...", config.Host, config.Port)

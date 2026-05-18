@@ -20,5 +20,5 @@ func main() {
 	setupFlags()
 	log.Printf("This is master Obi-Wan Kenobi, you are on the planet HolocronDB, ready to serve your requests on %s:%d", config.Host, config.Port)
 	log.Println("Hello there !!")
-	server.RunSyncTCPServer()
+	server.RunAsyncTCPServer()
 }

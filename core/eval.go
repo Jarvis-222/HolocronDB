@@ -11,14 +11,20 @@ func EvalCommand(cmd *RedisCommand) (interface{}, error) {
 
 	switch cmd.Cmd {
 	case "PING":
-		return EvalPingCommand(cmd)
+		return evalPING(cmd)
+	// case "SET":
+	// 	return evalSET(cmd)
+	// case "GET":
+	// 	return evalGET(cmd)
+	// case "EXPIRE":
+	// 	return evalTTL(cmd)
 	default:
-		return EvalPingCommand(cmd)
+		return nil, fmt.Errorf("unknown command '%s'", cmd.Cmd)
 	}
 
 }
 
-func EvalPingCommand(cmd *RedisCommand) (interface{}, error) {
+func evalPING(cmd *RedisCommand) (interface{}, error) {
 
 	if len(cmd.Args) == 0 {
 		return Encode("PONG", true), nil
