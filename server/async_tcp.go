@@ -10,7 +10,7 @@ import (
 
 func RunAsyncTCPServer() error {
 
-	log.Println("Starting asynchronous T CP server...", config.Host, config.Port)
+	log.Println("Starting asynchronous TCP server...", config.Host, config.Port)
 
 	max_clients := 20000
 	con_clients := 0

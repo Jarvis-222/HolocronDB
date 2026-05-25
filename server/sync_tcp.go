@@ -66,7 +66,7 @@ func respond(cmd *core.RedisCommand, c io.ReadWriter) {
 	}
 
 }
-
+  
 func respondError(err error, c io.ReadWriter) {
 
 	c.Write([]byte(fmt.Sprintf("-%s\r\n", err)))

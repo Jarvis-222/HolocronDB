@@ -133,7 +133,10 @@ func Encode(value interface{}, isSimpleString bool) []byte {
 		} else {
 			return fmt.Appendf(nil, "$%d\r\n%s\r\n", len(v), v)
 		}
-
+	case nil:
+		return []byte("$-1\r\n")
+	case int64:
+		return []byte(":" + fmt.Sprintf("%d\r\n", v))
 	default:
 		return fmt.Appendf(nil, "%v", v)
 	}
